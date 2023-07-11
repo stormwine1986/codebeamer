@@ -25,3 +25,8 @@ Finally, you can find jarfile in "target" directory.
 # How to depoy
 
 copy widget.iframe-2.0.0.0.jar to $CB_HOME/tomcat/webapps/ROOT/WEB-INF/lib, then restart service.
+
+```bash
+## with docker
+docker cp widget.iframe-2.0.0.0.jar docker-codebeamer-app-1:/home/appuser/codebeamer/tomcat/webapps/ROOT/WEB-INF/lib
+```
