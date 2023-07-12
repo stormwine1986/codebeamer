@@ -23,6 +23,7 @@ def serviceUrl = "http://localhost:8080"
 def servicepath = "/path/to/service"
 def serviceUser = "user"
 def servicePass = "pass"
+def BASELINE_NAME_CUSTOM_FIELD_IDX = 1
 def SCM_TYPE_CHOICE_LIST_IDX = 2
 def SCM_PATH_CUSTOM_FIELD_IDX = 1
 def CB_TRACKER_CHOICE_LIST_IDX = 3
@@ -47,6 +48,7 @@ logger.info("subject = ${subject}");
 
 def upstreamNamedDtos = subject.getSubjects();
 def projectDto = subject.getProject();
+def baselineName = subject.getCustomField(BASELINE_NAME_CUSTOM_FIELD_IDX);
 
 logger.info("upstreamNamedDtos = ${upstreamNamedDtos}");
 logger.info("projectDto = ${projectDto}");
@@ -56,15 +58,16 @@ if(upstreamNamedDtos != null){
     def requestBody = new JSONObject();
 
     requestBody.put("projectId", projectDto.getId());
+    requestBody.put("baselineName", baselineName);
     requestBody.put("items", new JSONArray());
 
     upstreamNamedDtos.each{it ->
         def item = new JSONObject();
         def trackItemDto = trackerItemMgr.findById(user, it.getId());
         item.put("id", trackItemDto.getId());
-        item.put("scmType", trackItemDto.getChoiceList(SCM_TYPE_CHOICE_LIST_IDX)?.get(0).getName());
+        item.put("scmType", trackItemDto.getChoiceList(SCM_TYPE_CHOICE_LIST_IDX)?.get(0)?.getName());
         item.put("scmPath", trackItemDto.getCustomField(SCM_PATH_CUSTOM_FIELD_IDX));
-        item.put("cbTracker", trackItemDto.getChoiceList(CB_TRACKER_CHOICE_LIST_IDX)?.get(0).getId());
+        item.put("cbTracker", trackItemDto.getChoiceList(CB_TRACKER_CHOICE_LIST_IDX)?.get(0)?.getId());
         requestBody.getJSONArray("items").put(item);
     }
 

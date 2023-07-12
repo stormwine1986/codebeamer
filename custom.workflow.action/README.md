@@ -20,7 +20,7 @@ see more: https://codebeamer.com/cb/wiki/649989
 ```bash
 ## with docker
 docker exec -it docker-codebeamer-app-1 bash
-[appuser@9deb8508b5e9 ~]$ tail -f codebeamer/tomcat/logs/cb.txt | grep event.impl.CustomScriptExecutor
+tail -f codebeamer/tomcat/logs/cb.txt | grep event.impl.CustomScriptExecutor
 ```
 if you want to see other more logs, run command instead
 
