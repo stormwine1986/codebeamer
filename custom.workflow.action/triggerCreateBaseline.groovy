@@ -2,6 +2,8 @@
 //
 // Data Structure
 //   'Baseline Action' -- subjects --> 'CM Item'
+//   'Baseline Action' has fields:
+//     Baseline Name: Text
 //   'CM Item' has fields:
 //     id: Tracker Item id
 //     SCM Type: Choice, 'Type for SCM, such as GIT,SVN,CB'
@@ -12,6 +14,7 @@
 //   when the 'Baseline Action' entering state thar named 'Baselined', the trigger will inovke external baseline creation service to create baseline
 //   for related 'CM Item'. the external baseline creation service need kown where the config item is. these information as below SHOULD be submitted:
 //     Project's Id: used for create CB baseline
+//     Baseline Name: the name of baseline
 //     CM Item's Id: uesd for write back status for 'CM Item'
 //     CM Item's ScmType: which type of scm the config item stored
 //     CM Item's ScmPath: if config item stored external, the path show the location
