@@ -117,7 +117,7 @@ curl -X GET -u bond:007 http://localhost:8080/api/v3/trackers/2047/fields -i
 curl -X GET -u bond:007 http://localhost:8080/api/v3/trackers/2047/fields/1002 -i
 ```
 
-## Find all reviews
+## Get tracker items by cbQL query string
 
 ```bash
 curl -X POST -u bond:007 http://127.0.0.1:8080/api/v3/items/query -i \
@@ -129,12 +129,32 @@ curl -X POST -u bond:007 http://127.0.0.1:8080/api/v3/items/query -i \
         }'
 ```
 
-## Submit timekeeping
+## Create a tracker item
 
 ```bash
+curl -X POST -u bond:007 http://127.0.0.1:8080/api/v3/trackers/3392/items -i \
+    -H 'Content-Type:application/json;charset=UTF-8' \
+    -d '{
+        "name": "fix bugs",
+        "description": "fix bugs",
+        "priority": {"id":10, "type":"ChoiceOptionReference"},
+        "spentMillis": 3600000,
+        "subjects": [
+            {"id":1020, "type":"TrackerItemReference"}
+        ],
+        "startDate": "2023-07-14T11:42:00.000"
+    }'
 ```
 
-## Submit baseline
+## Create a project or tracker baseline
 
 ```bash
+curl -X POST -u bond:007 http://127.0.0.1:8080/api/v3/baselines -i \
+    -H 'Content-Type:application/json;charset=UTF-8' \
+    -d '{
+        "name": "Bsys",
+        "description": "description",
+        "project": {"id":3},
+        "tracker": {"id":3384}
+    }'
 ```
