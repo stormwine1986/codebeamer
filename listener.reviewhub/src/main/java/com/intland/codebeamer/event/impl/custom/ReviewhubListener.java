@@ -49,11 +49,11 @@ public class ReviewhubListener implements TrackerItemListener {
                     return;
                 }
                 if(event.isPreEvent()){
-                    BaseEvent<ArtifactDto, TrackerItemDto, ActionData> event2 = new BaseEvent<>(true, new ArtifactDto(), event.getSecondarySource(), event.getUser(), event.getRequest(), event.getData()); 
+                    BaseEvent<ArtifactDto, TrackerItemDto, ActionData> event2 = new BaseEvent<>(true, new ArtifactDto(), event.getSource(), event.getUser(), event.getRequest(), event.getData()); 
                     scriptExecutor.preExecute(event2, event.getUser(), event.getSource(), SCRIPT_TYPE, SCRIPT_PATH, true);
                 } else {
-                    BaseEvent<ArtifactDto, TrackerItemDto, ActionData> event2 = new BaseEvent<>(false, new ArtifactDto(), event.getSecondarySource(), event.getUser(), event.getRequest(), event.getData());
-                    scriptExecutor.postExecute(event2, event.getUser(), event.getSource(), SCRIPT_TYPE, SCRIPT_PATH, false);
+                    BaseEvent<ArtifactDto, TrackerItemDto, ActionData> event2 = new BaseEvent<>(false, new ArtifactDto(), event.getSource(), event.getUser(), event.getRequest(), event.getData());
+                    scriptExecutor.postExecute(event2, event.getUser(), event.getSource(), SCRIPT_TYPE, SCRIPT_PATH, true);
                 }
             } catch(Exception e){
                 throw new VetoException(e.getMessage(), e);
