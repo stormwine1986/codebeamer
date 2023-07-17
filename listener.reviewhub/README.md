@@ -1,5 +1,11 @@
 # About
 
+Capture a specific event of reviewhub and hand them off to the workflow custom scripts for processing.
+e.g.
+|event|script|
+|-----|------|
+|review create event|review_created.groovy|
+
 ## How to package
 
 run maven command as below to package jarfile:
