@@ -34,6 +34,23 @@ func main() {
 				},
 				Action: grantrole,
 			},
+			{
+				Name:  "addgroup",
+				Usage: "Make a user a member of a group",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:     "group",
+						Aliases:  []string{"g"},
+						Required: true,
+					},
+					&cli.StringFlag{
+						Name:     "member",
+						Aliases:  []string{"m"},
+						Required: true,
+					},
+				},
+				Action: addgroup,
+			},
 		},
 		Flags: []cli.Flag{
 			&cli.StringFlag{
