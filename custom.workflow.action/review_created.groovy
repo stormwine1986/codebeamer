@@ -24,26 +24,30 @@ logger.info("usergroup = $usergroup")
 // Allows Web Flow users to access contextual information about the executing request, 
 // as well as the governing active flow execution. 
 // see also: https://docs.spring.io/spring-webflow/docs/current/api/org/springframework/webflow/execution/RequestContext.html
-def rc = RequestContextHolder.getRequestContext()
+// 
+// def rc = RequestContextHolder.getRequestContext()
 
 // Provides contextual information about a flow execution. 
 // A flow execution is an runnable instance of a FlowDefinition.
 // see also: https://docs.spring.io/spring-webflow/docs/current/api/org/springframework/webflow/execution/FlowExecutionContext.html
-def ec = rc.getFlowExecutionContext()
+// 
+// def ec = rc.getFlowExecutionContext()
 
 // A single, local instantiation of a flow definition launched within an overall flow execution. 
 // see also: https://docs.spring.io/spring-webflow/docs/current/api/org/springframework/webflow/execution/FlowSession.html
-def session = ec.getActiveSession()
+//
+// def session = ec.getActiveSession()
 
-def scope = session.getScope()
-
-def reviewSubjects = scope.get("reviewSubjects")
-def roTrackerDto = reviewSubjects.get(0)
+//
 // fetch review subject's project
-def projectDto = roTrackerDto.getProject()
-logger.info("projectDto = $projectDto")
+// 
+// def scope = session.getScope()
+// def reviewSubjects = scope.get("reviewSubjects")
+// def roTrackerDto = reviewSubjects.get(0)
+// def projectDto = roTrackerDto.getProject()
+// logger.info("projectDto = $projectDto")
 
 
 // set default user group to viewers
-subject.setViewers([usergroup])
+// subject.setViewers([usergroup])
 
