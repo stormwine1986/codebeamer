@@ -7,13 +7,24 @@ import com.intland.codebeamer.event.util.VetoException
 import com.intland.codebeamer.persistence.dto.ReviewDto
 import com.intland.codebeamer.controller.support.review.ReviewSupport
 import com.intland.codebeamer.persistence.dao.TrackerDao
+import com.intland.codebeamer.manager.ProjectManager
+import com.intland.codebeamer.persistence.dto.ProjectRoleReferenceDto
 
 logger.info("-------------------------------------")
 logger.info("subject = $subject")
+logger.info("subject.getAssignedTo() = ${subject.getAssignedTo()}")
 
-def trackerDao = applicationContext.getBean(TrackerDao.class);
-def reviewSupport = applicationContext.getBean(ReviewSupport.class);
+def trackerDao = applicationContext.getBean(TrackerDao.class)
+def reviewSupport = applicationContext.getBean(ReviewSupport.class)
+def projectManager = applicationContext.getBean(ProjectManager.class)
 
+def roles = subject.getAssignedTo()
+
+def porjectRoleRefs = roles.collect{
+                        projectManager.getProjectRole(user, subject.getProject().getId(), it.getName())
+                    }.collect{
+                        new ProjectRoleReferenceDto(it.getAttributes().getId())
+                    }
 
 def users = [user]
 
@@ -25,7 +36,7 @@ reviewDto.setCreatedFromGuard(false)
 reviewDto.setIsMergeRequest(false)
 // reviewDto.setEndDate(new Date())
 reviewDto.setIsPublicReview(true)
-reviewDto.setReviewers(users)
+reviewDto.setReviewers(porjectRoleRefs)
 reviewDto.setModerators(users)
 reviewDto.setViewers(users)
 reviewDto.setIsNecessaryBaselineSignature(false)
