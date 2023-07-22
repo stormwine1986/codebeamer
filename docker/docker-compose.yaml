@@ -6,7 +6,7 @@
 # any damage caused through use of this image, be it indirect, special, incidental
 # or consequential damages (including but not limited to damages for loss of business, loss of profits, interruption or the like).
 
-version: '2.1'
+version: '2.3'
 
 services:
 
@@ -23,6 +23,8 @@ services:
       - codebeamer-db-data:/var/lib/postgresql/data
     networks:
       - cb
+    cpus: 1
+    mem_limit: 1024m
 
   codebeamer-app:
     image: intland/codebeamer:2.0.0.0
@@ -45,6 +47,8 @@ services:
       - codebeamer-app-tmp:/home/appuser/codebeamer/tomcat/tmp
     networks:
       - cb
+    cpus: 1
+    mem_limit: 8192m
 
 networks:
   cb:
