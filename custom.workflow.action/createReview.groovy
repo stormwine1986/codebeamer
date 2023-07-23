@@ -1,3 +1,4 @@
+// auto create review causeed by specifed workflow event.
 
 if (!beforeEvent) {
     return;    // do NOTHING on after-event, everything is already handled in the before-event!
