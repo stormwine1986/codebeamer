@@ -1,4 +1,7 @@
 // auto create review causeed by specifed workflow event.
+// example:
+//   Review Task entry in "In Progress", auto create a Review in Review Hub. Copy Task's subjects to Review subjects.
+//   Copy Task's "Assiged To" to Reviewers. Set current user as Review "Moderators" and "Viewers"
 
 if (!beforeEvent) {
     return;    // do NOTHING on after-event, everything is already handled in the before-event!
