@@ -2,8 +2,6 @@
 //
 // Data Structure
 //   'Baseline Action' -- subjects --> 'CM Item'
-//   'Baseline Action' has fields:
-//     Baseline Name: Text
 //   'CM Item' has fields:
 //     id: Tracker Item id
 //     SCM Type: Choice, 'Type for SCM, such as GIT,SVN,CB'
@@ -14,7 +12,6 @@
 //   when the 'Baseline Action' entering state thar named 'Baselined', the trigger will inovke external baseline creation service to create baseline
 //   for related 'CM Item'. the external baseline creation service need kown where the config item is. these information as below SHOULD be submitted:
 //     Project's Id: used for create CB baseline
-//     Baseline Name: the name of baseline
 //     CM Item's Id: uesd for write back status for 'CM Item'
 //     CM Item's ScmType: which type of scm the config item stored
 //     CM Item's ScmPath: if config item stored external, the path show the location
@@ -22,14 +19,15 @@
 //   if external service done succefully, return status code with 200, other else trigger will throw a VetoException then rollback transaction.
 //
 // Adjust paramezers below and copy to <CBInstall>/tomcat/webapps/ROOT/config/scripts/workflow
-def serviceUrl = "http://localhost:8080"
-def servicepath = "/path/to/service"
-def serviceUser = "user"
-def servicePass = "pass"
-def BASELINE_NAME_CUSTOM_FIELD_IDX = 1
-def SCM_TYPE_CHOICE_LIST_IDX = 2
-def SCM_PATH_CUSTOM_FIELD_IDX = 1
-def CB_TRACKER_CHOICE_LIST_IDX = 3
+
+// Defined Constant
+def serviceUrl = "http://localhost:8080" // external service root
+def servicepath = "/path/to/service" // external service path
+def serviceUser = "user" // auth user
+def servicePass = "pass" // password of auth user
+def SCM_TYPE_CHOICE_LIST_IDX = 2 // Field ID of "SCM Type"
+def SCM_PATH_CUSTOM_FIELD_IDX = 1 // Field ID of "SCM Path"
+def CB_TRACKER_CHOICE_LIST_IDX = 3 // Field ID of "CB Tracker"
 
 
 import com.intland.codebeamer.security.util.RemoteConnection;
@@ -51,7 +49,6 @@ logger.info("subject = ${subject}");
 
 def upstreamNamedDtos = subject.getSubjects();
 def projectDto = subject.getProject();
-def baselineName = subject.getCustomField(BASELINE_NAME_CUSTOM_FIELD_IDX);
 
 logger.info("upstreamNamedDtos = ${upstreamNamedDtos}");
 logger.info("projectDto = ${projectDto}");
@@ -61,16 +58,15 @@ if(upstreamNamedDtos != null){
     def requestBody = new JSONObject();
 
     requestBody.put("projectId", projectDto.getId());
-    requestBody.put("baselineName", baselineName);
     requestBody.put("items", new JSONArray());
 
     upstreamNamedDtos.each{it ->
         def item = new JSONObject();
         def trackItemDto = trackerItemMgr.findById(user, it.getId());
         item.put("id", trackItemDto.getId());
-        item.put("scmType", trackItemDto.getChoiceList(SCM_TYPE_CHOICE_LIST_IDX)?.get(0)?.getName());
+        item.put("scmType", trackItemDto.getChoiceList(SCM_TYPE_CHOICE_LIST_IDX)?.get(0).getName());
         item.put("scmPath", trackItemDto.getCustomField(SCM_PATH_CUSTOM_FIELD_IDX));
-        item.put("cbTracker", trackItemDto.getChoiceList(CB_TRACKER_CHOICE_LIST_IDX)?.get(0)?.getId());
+        item.put("cbTracker", trackItemDto.getChoiceList(CB_TRACKER_CHOICE_LIST_IDX)?.get(0).getId());
         requestBody.getJSONArray("items").put(item);
     }
 
