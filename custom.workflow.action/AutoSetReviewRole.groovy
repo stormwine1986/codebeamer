@@ -1,7 +1,7 @@
 // Auto Set Review Role
-// When defect entry "Review for Close", codebeamer will autoset review role according to "scope","level" and "phase".
+// $CB_HOME/tomcat/webapps/cb/config/script/workflow/AutoSetReviewRole.groovy
 
-if(user.name!="bond") return // for gray release
+//if(user.name!="bond") return
 
 if(!beforeEvent) return
 
@@ -9,96 +9,69 @@ import com.intland.codebeamer.event.util.VetoException
 import com.intland.codebeamer.manager.ProjectManager
 import com.intland.codebeamer.persistence.dto.ProjectRoleReferenceDto
 import com.intland.codebeamer.manager.RoleManager
+import com.intland.codebeamer.manager.TrackerManager
+import com.intland.codebeamer.manager.TrackerItemManager
 
 projectMgr = applicationContext.getBean(ProjectManager.class)
 roleMgr = applicationContext.getBean(RoleManager.class)
+trackerMgr = applicationContext.getBean(TrackerManager.class)
+trackerItemMgr = applicationContext.getBean(TrackerItemManager.class)
 
 // Defined Constant
-def ROLE_ID_CHIP_SE = [64] 				// 芯片SE
-def ROLE_ID_PM = [74]					// 项目经理
-def ROLE_ID_MASTER = [74]				// 总工
-def ROLE_ID_PQE = [34]					// PQE
-def ROLE_ID_D_MGR = [52,47,33,67,70]	// 开发经理
-def ROLE_ID_CHIP_RR = [69]				// 芯片研发代表
-def ROLE_ID_SE_MASTER = [35]			// SE组长
-def FIELD_ID_REVIEW_ROLE = 9			// Field Id of "缺陷审核小组" which in "Defect"
+def TRACKER_KEY_NAME = "PROJECT"	// Key name of Tracker named "项目属性"
+def TRACKER_TYPE = "AREA"		// Type of Tracker named "项目属性"
+def FIELD_ID_ROLEMAPPING = 1		// Field Id of "缺陷审核小组配置" in "项目属性"
 
-def scope = subject.getChoiceList(15)[0] 	// scope that defect located
-def level = subject.getChoiceList(13)[0] 	// severity
-def phase = subject.getChoiceList(8)[0]		// project phrase that defect found in
-def reviewRole = subject.getChoiceList(9)	// current value of review role
+def trackers = trackerMgr.findTrackers(user, subject.project.id, "AREA")
+def tracker = null
+trackers.each{
+	it ->
+	if(it.keyName==TRACKER_KEY_NAME) tracker = it
+}
 
-// when phase is TR1 or TR2, review role MUST be filled by human 
-if((phase.name=="TR1"||phase.name=="TR2")&&reviewRole.isEmpty()) throw new VetoException("不满足约束：缺陷审核小组必须设置。")
+def scope = subject.getChoiceList(15)[0]
+def level = subject.getChoiceList(13)[0]
+def phase = subject.getChoiceList(8)[0]
+def reviewRole = subject.getChoiceList(9)
 
-logger.info("scope.name = ${scope.name} , level.name = ${level.name} , phase.name = ${phase.name}")
+if(tracker==null&&(reviewRole==null || reviewRole.isEmpty())) throw new VetoException("不满足约束：缺陷审核小组必须设置。")
 
-// Rule Mapping
-if(scope.name=="模块缺陷"&&level.name=="致命"&&phase.name=="TR4"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="模块缺陷"&&level.name=="致命"&&phase.name=="TR5"){setRole(ROLE_ID_PM)}
-if(scope.name=="模块缺陷"&&level.name=="致命"&&phase.name=="TR6"){setRole(ROLE_ID_MASTER)}
-if(scope.name=="模块缺陷"&&level.name=="致命"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
+def trackerItems = trackerItemMgr.findByTracker(user, [tracker], null)
 
-if(scope.name=="模块缺陷"&&level.name=="严重"&&phase.name=="TR4"){setRole(ROLE_ID_D_MGR)}
-if(scope.name=="模块缺陷"&&level.name=="严重"&&phase.name=="TR5"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="模块缺陷"&&level.name=="严重"&&phase.name=="TR6"){setRole(ROLE_ID_PM)}
-if(scope.name=="模块缺陷"&&level.name=="严重"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
+if(trackerItems.isEmpty()&&(reviewRole==null || reviewRole.isEmpty())) throw new VetoException("不满足约束：缺陷审核小组必须设置。")
 
-if(scope.name=="模块缺陷"&&level.name=="一般"&&phase.name=="TR4"){setRole(ROLE_ID_D_MGR)}
-if(scope.name=="模块缺陷"&&level.name=="一般"&&phase.name=="TR5"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="模块缺陷"&&level.name=="一般"&&phase.name=="TR6"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="模块缺陷"&&level.name=="一般"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
+def configHolder = trackerItems.get(0)
+logger.info("configObj = $configHolder")
+def rolemapping = configHolder.getTable(FIELD_ID_ROLEMAPPING)
+logger.info("rolemapping = $rolemapping")
 
-if(scope.name=="模块缺陷"&&level.name=="提示"&&phase.name=="TR4"){setRole(ROLE_ID_D_MGR)}
-if(scope.name=="模块缺陷"&&level.name=="提示"&&phase.name=="TR5"){setRole(ROLE_ID_D_MGR)}
-if(scope.name=="模块缺陷"&&level.name=="提示"&&phase.name=="TR6"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="模块缺陷"&&level.name=="提示"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
+//if((phase.name=="TR1"||phase.name=="TR2")&&reviewRole.isEmpty()) throw new VetoException("不满足约束：缺陷审核小组必须设置。")
 
-if(scope.name=="芯片缺陷"&&level.name=="致命"&&phase.name=="TR4"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="芯片缺陷"&&level.name=="致命"&&phase.name=="TR5"){setRole(ROLE_ID_PM)}
-if(scope.name=="芯片缺陷"&&level.name=="致命"&&phase.name=="TR6"){setRole(ROLE_ID_PM)}
-if(scope.name=="芯片缺陷"&&level.name=="致命"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
+logger.info("scope = ${scope} , level = ${level} , phase = ${phase}")
 
-if(scope.name=="芯片缺陷"&&level.name=="严重"&&phase.name=="TR4"){setRole(ROLE_ID_SE_MASTER)}
-if(scope.name=="芯片缺陷"&&level.name=="严重"&&phase.name=="TR5"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="芯片缺陷"&&level.name=="严重"&&phase.name=="TR6"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="芯片缺陷"&&level.name=="严重"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
+def apply = null
+rolemapping.each{
+	it ->
+	if(it.keySet().size() == 4){
+		if(it.get(0) == "${scope.id}" && it.get(1) == "${level.id}" && it.get(2) == "${phase.id}") {
+			apply = it
+			setRole(it.get(3))
+		}
+	}
+}
 
-if(scope.name=="芯片缺陷"&&level.name=="一般"&&phase.name=="TR4"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="芯片缺陷"&&level.name=="一般"&&phase.name=="TR5"){setRole(ROLE_ID_SE_MASTER)}
-if(scope.name=="芯片缺陷"&&level.name=="一般"&&phase.name=="TR6"){setRole(ROLE_ID_SE_MASTER)}
-if(scope.name=="芯片缺陷"&&level.name=="一般"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
-
-if(scope.name=="芯片缺陷"&&level.name=="提示"&&phase.name=="TR4"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="芯片缺陷"&&level.name=="提示"&&phase.name=="TR5"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="芯片缺陷"&&level.name=="提示"&&phase.name=="TR6"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="芯片缺陷"&&level.name=="提示"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
-
-if(scope.name=="系统缺陷"&&level.name=="致命"&&phase.name=="TR4"){setRole(ROLE_ID_PM)}
-if(scope.name=="系统缺陷"&&level.name=="致命"&&phase.name=="TR5"){setRole(ROLE_ID_PM)}
-if(scope.name=="系统缺陷"&&level.name=="致命"&&phase.name=="TR6"){setRole(ROLE_ID_PM)}
-if(scope.name=="系统缺陷"&&level.name=="致命"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
-
-if(scope.name=="系统缺陷"&&level.name=="严重"&&phase.name=="TR4"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="系统缺陷"&&level.name=="严重"&&phase.name=="TR5"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="系统缺陷"&&level.name=="严重"&&phase.name=="TR6"){setRole(ROLE_ID_CHIP_RR)}
-if(scope.name=="系统缺陷"&&level.name=="严重"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
-
-if(scope.name=="系统缺陷"&&level.name=="一般"&&phase.name=="TR4"){setRole(ROLE_ID_SE_MASTER)}
-if(scope.name=="系统缺陷"&&level.name=="一般"&&phase.name=="TR5"){setRole(ROLE_ID_SE_MASTER)}
-if(scope.name=="系统缺陷"&&level.name=="一般"&&phase.name=="TR6"){setRole(ROLE_ID_SE_MASTER)}
-if(scope.name=="系统缺陷"&&level.name=="一般"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
-
-if(scope.name=="系统缺陷"&&level.name=="提示"&&phase.name=="TR4"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="系统缺陷"&&level.name=="提示"&&phase.name=="TR5"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="系统缺陷"&&level.name=="提示"&&phase.name=="TR6"){setRole(ROLE_ID_CHIP_SE)}
-if(scope.name=="系统缺陷"&&level.name=="提示"&&phase.name=="GA"){setRole(ROLE_ID_PQE)}
+logger.info("apply = $apply")
+if(apply == null && (reviewRole==null || reviewRole.isEmpty())) throw new VetoException("不满足约束：缺陷审核小组必须设置。")
 
 def setRole(roleId){
 	logger.info("role id = $roleId")
-	def roles = roleMgr.findById(user, roleId)
+	def ids = roleId.split(",").collect{
+		it -> return it.split("-")[1]
+	}
+	logger.info("ids = $ids")
+	def roles = roleMgr.findById(user, ids)
 	logger.info("roles = $roles")
-	subject.setChoiceList(FIELD_ID_REVIEW_ROLE, roles)
+	subject.setChoiceList(9, roles)
 }
 
 //throw new VetoException("see log")
