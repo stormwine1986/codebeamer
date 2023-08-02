@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.cbc</groupId>
-  <artifactId>listener.reviewhub</artifactId>
+  <artifactId>listener.wrapper</artifactId>
   <version>2.0.0.0</version>
   <packaging>jar</packaging>
 
-  <name>listener.reviewhub</name>
+  <name>listener.wrapper</name>
   <url>http://maven.apache.org</url>
 
   <properties>

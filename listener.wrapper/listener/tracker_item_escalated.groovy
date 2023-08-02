@@ -1,0 +1,1 @@
+logger.info("script = ${script.name}") // script: java.io.File
