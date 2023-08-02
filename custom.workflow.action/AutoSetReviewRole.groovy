@@ -1,7 +1,7 @@
 // Auto Set Review Role
 // $CB_HOME/tomcat/webapps/cb/config/script/workflow/AutoSetReviewRole.groovy
 
-//if(user.name!="bond") return
+//if(user.name!="bond") return // just for gray release
 
 if(!beforeEvent) return
 
@@ -19,8 +19,12 @@ trackerItemMgr = applicationContext.getBean(TrackerItemManager.class)
 
 // Defined Constant
 def TRACKER_KEY_NAME = "PROJECT"	// Key name of Tracker named "项目属性"
-def TRACKER_TYPE = "AREA"		// Type of Tracker named "项目属性"
+def TRACKER_TYPE = "AREA"		    // Type of Tracker named "项目属性"
 def FIELD_ID_ROLEMAPPING = 1		// Field Id of "缺陷审核小组配置" in "项目属性"
+def FIELD_ID_SCOPE = 15             // Field Id of "Defect Scope" in "Defect"
+def FIELD_ID_LEVEL = 13             // Field Id of "Defect Level" in "Defect"
+def FIELD_ID_PHASE = 8              // Field Id of "Project Phase" in "Defect"
+def FIELD_ID_REVIEW_ROLE = 9        // Field Id of "Defect Review Group" in "Defect"
 
 def trackers = trackerMgr.findTrackers(user, subject.project.id, "AREA")
 def tracker = null
@@ -29,10 +33,10 @@ trackers.each{
 	if(it.keyName==TRACKER_KEY_NAME) tracker = it
 }
 
-def scope = subject.getChoiceList(15)[0]
-def level = subject.getChoiceList(13)[0]
-def phase = subject.getChoiceList(8)[0]
-def reviewRole = subject.getChoiceList(9)
+def scope = subject.getChoiceList(FIELD_ID_SCOPE)[0]
+def level = subject.getChoiceList(FIELD_ID_LEVEL)[0]
+def phase = subject.getChoiceList(FIELD_ID_PHASE)[0]
+def reviewRole = subject.getChoiceList(FIELD_ID_REVIEW_ROLE)
 
 if(tracker==null&&(reviewRole==null || reviewRole.isEmpty())) throw new VetoException("不满足约束：缺陷审核小组必须设置。")
 
@@ -44,8 +48,6 @@ def configHolder = trackerItems.get(0)
 logger.info("configObj = $configHolder")
 def rolemapping = configHolder.getTable(FIELD_ID_ROLEMAPPING)
 logger.info("rolemapping = $rolemapping")
-
-//if((phase.name=="TR1"||phase.name=="TR2")&&reviewRole.isEmpty()) throw new VetoException("不满足约束：缺陷审核小组必须设置。")
 
 logger.info("scope = ${scope} , level = ${level} , phase = ${phase}")
 
@@ -71,7 +73,7 @@ def setRole(roleId){
 	logger.info("ids = $ids")
 	def roles = roleMgr.findById(user, ids)
 	logger.info("roles = $roles")
-	subject.setChoiceList(9, roles)
+	subject.setChoiceList(FIELD_ID_REVIEW_ROLE, roles)
 }
 
-//throw new VetoException("see log")
+//throw new VetoException("see log") // just for debug
