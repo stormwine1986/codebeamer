@@ -28,5 +28,5 @@ run this command to see the log:
 ```bash
 ## with docker
 docker exec -it docker-codebeamer-app-1 bash
-tail -f codebeamer/tomcat/logs/cb.txt | grep TrackerItemListenerScriptWrapper 
+tail -f codebeamer/tomcat/logs/cb.txt | grep TrackerItemListenerScriptWrapper
 ```

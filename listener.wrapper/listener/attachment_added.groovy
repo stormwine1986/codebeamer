@@ -1,3 +1,4 @@
+/**
 logger.info("beforeEvent = $beforeEvent") // beforeEvent: java.lang.Boolean
 logger.info("script = ${script.name}") // script: java.io.File
 logger.info("user = $user") // user: com.intland.codebeamer.persistence.dto.UserDto
@@ -9,30 +10,20 @@ logger.info("event.data = ${event.data}") // event.data: com.intland.codebeamer.
 logger.info("event.source = ${event.source}") // event.source: com.intland.codebeamer.persistence.util.TrackerItemAttachmentGroup
 logger.info("event.secondarySource = ${event.secondarySource}") // event.secondarySource: [com.intland.codebeamer.persistence.dto.AccessPermissionDto]
 
-logger.info("AttachmentArtifacts: ")
-event.source.attachmentArtifacts.each{
-    it -> 
-    logger.info("it = $it")
-    logger.info("path = ${it.path}")
-    logger.info("map = ${it.attributes}")
-}
+if(!beforeEvent) return
 
-logger.info("ActionData: ")
-logger.info("data.attachmentName = ${event.data.attachmentName}")
-logger.info("data.input = ${event.data.input}")
-event.data.uploads.each{
+import com.intland.codebeamer.controller.dndupload.UploadStorage
+import com.intland.codebeamer.persistence.dto.binary.BinaryStreamDtoFactory
+
+def uploadStorage = applicationContext.getBean(UploadStorage.class)
+
+def conversationId = event.request.getParameter("uploadConversationId")
+logger.info("uploadConversationId = $conversationId")
+
+def conversation = uploadStorage.getConversation(user, conversationId, event.request)
+logger.info("Uploaded Files: ")
+conversation.fileList.each{
     it ->
-    logger.info("filename ${it.fileName} file ${it.file}")
-}
-
-/**
-logger.info("HTTP Request: ")
-if(!beforeEvent){
-    event.request.parts.each{
-        it ->
-        logger.info("name ${it.name} size ${it.size} stream ${it.inputStream}")
-    }
+    logger.info("file = ${it.file}")
 }
 **/
-
-// Attacher

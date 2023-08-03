@@ -1,3 +1,4 @@
+/**
 logger.info("beforeEvent = $beforeEvent") // beforeEvent: java.lang.Boolean
 logger.info("script = ${script.name}") // script: java.io.File
 logger.info("user = $user") // user: com.intland.codebeamer.persistence.dto.UserDto
@@ -8,3 +9,4 @@ logger.info("event.request = ${event.request}") // event.request: javax.servlet.
 logger.info("event.data = ${event.data}") // event.data: com.intland.codebeamer.manager.util.ActionData
 logger.info("event.source = ${event.source}") // event.source: com.intland.codebeamer.persistence.dto.TrackerItemDto
 logger.info("event.secondarySource = ${event.secondarySource}") // event.secondarySource: com.intland.codebeamer.persistence.dto.TrackerItemEscalationScheduleDto
+**/
