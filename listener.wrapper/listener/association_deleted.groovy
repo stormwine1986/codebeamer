@@ -1,1 +1,1 @@
-logger.info("script = $script")
+logger.info("script = ${script.name}")
