@@ -36,7 +36,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
 
     @Override
     public void trackerItemCreated(BaseEvent<TrackerItemDto, TrackerItemDto, ActionData> event) throws VetoException {
-        logger.info("trackerItemCreated");
         try {
             execute(event, "tracker_item_created.groovy");
         } catch (Exception e) {
@@ -47,7 +46,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
 
     @Override
     public void trackerItemUpdated(BaseEvent<TrackerItemDto, TrackerItemDto, ActionData> event) throws VetoException {
-        logger.info("trackerItemUpdated");
         try {
             execute(event, "tracker_item_updated.groovy");
         } catch (Exception e) {
@@ -58,7 +56,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
     
     @Override
     public void trackerItemRemoved(BaseEvent<TrackerItemDto, TrackerItemDto, ActionData> event) throws VetoException {
-        logger.info("trackerItemRemoved");
         try {
             execute(event, "tracker_item_removed.groovy");
         } catch (Exception e) {
@@ -69,7 +66,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
     
     @Override
     public void trackerItemRestored(BaseEvent<TrackerItemDto, TrackerItemDto, ActionData> event) throws VetoException {
-        logger.info("trackerItemRestored");
         try {
             execute(event, "tracker_item_restored.groovy");
         } catch (Exception e) {
@@ -80,7 +76,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
     
     @Override
     public void trackerItemDeleted(BaseEvent<TrackerItemDto, TrackerItemDto, ActionData> event) throws VetoException {
-        logger.info("trackerItemDeleted");
         try {
             execute(event, "tracker_item_deleted.groovy");
         } catch (Exception e) {
@@ -91,7 +86,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
     
     @Override
     public void trackerItemEscalated(BaseEvent<TrackerItemDto, TrackerItemEscalationScheduleDto, ActionData> event) throws VetoException {
-        logger.info("trackerItemEscalated");
         try {
             execute(event, "tracker_item_escalated.groovy");
         } catch (Exception e) {
@@ -102,7 +96,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
     
     @Override
     public void attachmentAdded(BaseEvent<TrackerItemAttachmentGroup, List<AccessPermissionDto>, ActionData> event) throws VetoException {
-        logger.info("attachmentAdded");
         try {
             execute(event, "attachment_added.groovy");
         } catch (Exception e) {
@@ -113,7 +106,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
     
     @Override
     public void attachmentUpdated(BaseEvent<TrackerItemAttachmentGroup, List<AccessPermissionDto>, ActionData> event) throws VetoException {
-        logger.info("attachmentUpdated");
         try {
             execute(event, "attachment_updated.groovy");
         } catch (Exception e) {
@@ -124,7 +116,6 @@ public class TrackerItemListenerScriptWrapper implements TrackerItemListener {
     
     @Override
     public void attachmentRemoved(BaseEvent<TrackerItemDto, List<ArtifactDto>, ActionData> event) throws VetoException {
-        logger.info("attachmentRemoved");
         try {
             execute(event, "attachment_removed.groovy");
         } catch (Exception e) {
