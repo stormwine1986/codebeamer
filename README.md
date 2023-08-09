@@ -26,3 +26,4 @@ the resposity that store something about codebeamer custom component is mantaine
 |Tool                   |Reference Link                                                             |
 |-----------------------|---------------------------------------------------------------------------|
 |Parasoft               |<https://docs.parasoft.com/display/DTP543/Integrating+with+CodeBeamer+ALM> |
+|vectorCast             |<https://www.vector.com/int/en/download/vectorcast-codebeamer-integration/>|
