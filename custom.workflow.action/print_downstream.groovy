@@ -14,4 +14,5 @@ def result = controller.getBaselineTrackerItemRelations(user,subject.id,null,1,5
 result.downstreamReferences.each{
     it -> logger.info("downstreams.*.id = ${it.itemRevision.id}")
 }
-throw new VetoException("debug")
+
+throw new VetoException("see log")
