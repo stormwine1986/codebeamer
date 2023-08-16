@@ -1,16 +1,15 @@
 // Groovy script implements a Jenkins-build
 // Adjust paramezers below and copy to <CBInstall>/tomcat/webapps/ROOT/config/scripts/workflow
 
-def jenkinsUrl = "http://jenkins:8080/"
-def jenkinsUser = "admin" //User used to connect to Jenkins
-def jenkinsPassword = "admin" //Either password or better an access token of the user
-
-def jenkinsBuild = "codebeamer" //Name of the build to trigger
-def jenkinsBuildToken = "codebeamer" //Token configure for remote triggering of the build.
-
-def linkField = "cIBuild"
-def runningStatus = 3
-def successStatus = 7
+// Defined Constant
+def jenkinsUrl = "http://jenkins:8080/" // Jenkins server
+def jenkinsUser = "admin"               // User used to connect to Jenkins
+def jenkinsPassword = "admin"           // Either password or better an access token of the user
+def jenkinsBuild = "codebeamer"         // Name of the build to trigger
+def jenkinsBuildToken = "codebeamer"    // Token configure for remote triggering of the build.
+def linkField = "cIBuild"               // the field used to show the link to build detail page
+def runningStatus = 3                   // status index value for "In Progress"
+def successStatus = 7                   // status index value for "Completed"
 
 
 import com.intland.codebeamer.persistence.dto.*;
@@ -40,11 +39,9 @@ def token = new Token(user)
 token.getDef().onlyMatchUrlStartingWith("/rest/item").setExpiry(1, TimeUnit.HOURS)
 def tokenString = "CB_TOKEN" + token.encodeToToken();
 
-
 if (!beforeEvent) {
     return;    // do NOTHING on after-event, everything is already handled in the before-event!
 }
-
 
 logger.info("-------------------------------------");
 logger.info("Executing Jenkins build:" + subject);
