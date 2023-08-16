@@ -1,4 +1,5 @@
 // JUST for Debug
+// use rest controller to fetch downstreams
 
 if (!beforeEvent) {
     return    // do NOTHING on after-event, everything is already handled in the before-event!
