@@ -20,28 +20,32 @@
 //
 // Adjust paramezers below and copy to <CBInstall>/tomcat/webapps/ROOT/config/scripts/workflow
 
+if (!beforeEvent) {
+    return;    // do NOTHING on after-event, everything is already handled in the before-event!
+}
+
+if(user.name!="bond") return  // for gray release
+
 // Defined Constant
-def serviceUrl = "http://localhost:8080" // external service root
-def servicepath = "/path/to/service" // external service path
-def serviceUser = "user" // auth user
-def servicePass = "pass" // password of auth user
-def SCM_TYPE_CHOICE_LIST_IDX = 2 // Field ID of "SCM Type"
-def SCM_PATH_CUSTOM_FIELD_IDX = 1 // Field ID of "SCM Path"
-def CB_TRACKER_CHOICE_LIST_IDX = 3 // Field ID of "CB Tracker"
+def serviceUrl = "http://172.18.1.126:9000"     // target service root
+def servicepath = "/codebeamerapi/tags/create"  // target service path
+def serviceUser = "ALM"                         // service auth user
+def servicePass = "123456"                      // service token
+def BASELINE_NAME_CUSTOM_FIELD_IDX = 0          // Field ID of "Baseline Name" on Tracker named "Baseline Action"
+def SCM_TYPE_CHOICE_LIST_IDX = 7                // Field ID of "SCM Type" on Tracker named "CM Item"
+def SCM_PATH_CUSTOM_FIELD_IDX = 1               // Field ID of "SCM Path" on Tracker named "CM Item"
+def CB_TRACKER_CHOICE_LIST_IDX = 6              // Field ID of "Tracker" on Tracker named "CM Item"
 
-
-import com.intland.codebeamer.security.util.RemoteConnection;
-import com.intland.codebeamer.security.util.RestHttpClient;
 import com.intland.codebeamer.event.util.VetoException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import com.intland.codebeamer.manager.TrackerItemManager;
+import java.net.URL
+import java.net.HttpURLConnection
+import java.util.Base64
+import java.io.OutputStreamWriter
 
 def trackerItemMgr = applicationContext.getBean(TrackerItemManager.class);
-
-if (!beforeEvent) {
-    return;    // do NOTHING on after-event, everything is already handled in the before-event!
-}
 
 logger.info("--------------------------------------");
 
@@ -49,6 +53,7 @@ logger.info("subject = ${subject}");
 
 def upstreamNamedDtos = subject.getSubjects();
 def projectDto = subject.getProject();
+def baselineName = subject.getCustomField(BASELINE_NAME_CUSTOM_FIELD_IDX)
 
 logger.info("upstreamNamedDtos = ${upstreamNamedDtos}");
 logger.info("projectDto = ${projectDto}");
@@ -58,27 +63,36 @@ if(upstreamNamedDtos != null){
     def requestBody = new JSONObject();
 
     requestBody.put("projectId", projectDto.getId());
+    requestBody.put("baselineName", baselineName);
     requestBody.put("items", new JSONArray());
 
     upstreamNamedDtos.each{it ->
         def item = new JSONObject();
         def trackItemDto = trackerItemMgr.findById(user, it.getId());
         item.put("id", trackItemDto.getId());
-        item.put("scmType", trackItemDto.getChoiceList(SCM_TYPE_CHOICE_LIST_IDX)?.get(0).getName());
-        item.put("scmPath", trackItemDto.getCustomField(SCM_PATH_CUSTOM_FIELD_IDX));
-        item.put("cbTracker", trackItemDto.getChoiceList(CB_TRACKER_CHOICE_LIST_IDX)?.get(0).getId());
+        item.put("scmType", trackItemDto.getChoiceList(SCM_TYPE_CHOICE_LIST_IDX)?.get(0)?.getName());
+	      item.put("scmPath", (trackItemDto.getCustomField(SCM_PATH_CUSTOM_FIELD_IDX)==null)?JSONObject.NULL:trackItemDto.getCustomField(SCM_PATH_CUSTOM_FIELD_IDX));
+        item.put("cbTracker", (trackItemDto.getChoiceList(CB_TRACKER_CHOICE_LIST_IDX)?.get(0)?.getId()==null)?JSONObject.NULL:trackItemDto.getChoiceList(CB_TRACKER_CHOICE_LIST_IDX)?.get(0)?.getId());
         requestBody.getJSONArray("items").put(item);
     }
 
-    logger.info("requestBody = ${requestBody}");
+    logger.info("requestBody = ${requestBody.toString()}");
 
-    def client = new RestHttpClient(new RemoteConnection(serviceUrl,serviceUser,servicePass));
-    def responseEntity = client.postForEntity(servicepath,requestBody.toString(),JSONObject.class);
-    def statusCode = responseEntity.getStatusCode().value();
-    def responseBody = responseEntity.getBody();
-    logger.info("statusCode = ${statusCode}, responseBody = ${responseBody}");
+    def url = new URL(serviceUrl+servicepath)
+    def conn = (HttpURLConnection)url.openConnection()
+    conn.setDoOutput(true)
+    conn.setRequestMethod("POST")
+    conn.setRequestProperty("Content-Type","application/json;charset=UTF-8")
+    def base64 = Base64.getEncoder().encode((serviceUser+":"+servicePass).getBytes())
+    conn.setRequestProperty("Authorization","Basic " + new String(base64))
+    def writer = new OutputStreamWriter(conn.getOutputStream())
+    writer.write(requestBody.toString())
+    writer.flush()
+    writer.close()
+    logger.info("http.status = ${conn.responseCode}")
 
-    if(statusCode!=200){
-        throw new VetoException("target service is not work, see logs for more.");
-    }
+    if(conn.responseCode!=200) throw new VetoException("target service is not work, see logs for more.")
+    
 }
+
+//throw new VetoException("see log")
