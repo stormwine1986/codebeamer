@@ -25,7 +25,7 @@ public class IframeWidgetInformation implements WidgetInformation {
 	}
 
 	public String getName() {
-		return "External Site Resources Widget";
+		return "IFrameWidget";
 	}
 
 	public String getShortDescription() {

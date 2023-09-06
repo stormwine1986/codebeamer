@@ -88,7 +88,7 @@ public class IframeWidget extends AbstractWidget {
 	}
 
 	public String getDefaultTitleKey() {
-		return "External Site Resources";
+		return "IFrame Widget";
 	}
 
 	public String getVersion() {
