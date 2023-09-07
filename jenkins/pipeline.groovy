@@ -9,7 +9,7 @@ pipeline {
                 echo multiline
                 echo string
                 sh """
-                    curl -X PUT -H 'Content-Type:application/json' ${cbUrl}/rest/item -u ${cbUser}:${cbPwd} -d '{"uri":"/item/${taskId}","buildInfo":"[show|${JENKINS_URL}blue/organizations/jenkins/codebeamer/detail/codebeamer/${BUILD_NUMBER}/pipeline]"}'
+                    curl -X PUT -H 'Content-Type:application/json' ${cbUrl}/rest/item -u ${cbUser}:${cbPwd} -d '{"uri":"/item/${taskId}","buildInfo":"[show|${JENKINS_URL}blue/organizations/jenkins/codebeamer/detail/codebeamer/${BUILD_NUMBER}/pipeline]","reportInfo":"[show|${BUILD_URL}testReport]"}'
                 """
             }
         }
