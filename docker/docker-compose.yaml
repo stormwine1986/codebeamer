@@ -6,7 +6,7 @@
 # any damage caused through use of this image, be it indirect, special, incidental
 # or consequential damages (including but not limited to damages for loss of business, loss of profits, interruption or the like).
 
-version: '2.3'
+version: '3'
 
 services:
 
@@ -66,6 +66,17 @@ services:
     mem_limit: 2048m
     environment:
       - SUPERSET_SECRET_KEY=superset
+  
+  gerrit:
+    image: gerritcodereview/gerrit
+    ports:
+      - 8081:8080
+      - 29418:29418
+    networks:
+      - cb
+    environment:
+      - CANONICAL_WEB_URL=http://localhost:8081
+    mem_limit: 2048m
 
 networks:
   cb:
