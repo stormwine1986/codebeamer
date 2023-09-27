@@ -66,6 +66,19 @@ def getGerritData(
     cur.close()
     return results
 
+@app.get("/gerrit/data/projects")
+def getProjects():
+    cur = con.cursor()
+    sql = """
+    SELECT DISTINCT PROJECT FROM CHANGE_MASTER
+    """
+    results = []
+    for row in cur.execute(sql):
+        results.append(row[0])
+
+    cur.close()
+    return results
+
 if __name__ == '__main__':
     con = oracledb.connect(dsn="10.125.1.81/ALMCBTEST",user="gerrit",password="gerrit")
     print("Database Version: " + con.version)

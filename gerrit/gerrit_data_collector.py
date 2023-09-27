@@ -117,7 +117,7 @@ def refreshDatabase(change, comments, con):
                 comment["id"],
                 change["change_id"],
                 file,
-                comment["line"],
+                getValue(comment, "line", 0),
                 comment["author"]["name"],
                 toTimestamp(comment["updated"]),
                 comment["message"],
