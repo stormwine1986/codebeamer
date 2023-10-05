@@ -10,7 +10,7 @@ version: '3'
 
 services:
 
-  codebeamer-db:
+  db:
     image: intland/postgres:debian-15.3
     ports:
       - 5432:5432
@@ -19,40 +19,40 @@ services:
       - POSTGRESQL_PASSWORD=pass
       - POSTGRESQL_DATABASE=codebeamer
       - TZ=UTC
-    volumes:
-      - codebeamer-db-data:/var/lib/postgresql/data
+    # volumes:
+    #   - db-data:/var/lib/postgresql/data
     networks:
       - cb
 
-  codebeamer-app:
+  app:
     image: intland/codebeamer:2.0.0.0
     ports:
       - 8080:8080
     environment:
       - DEBUG=false
       - TZ=Europe/Berlin
-      - WAIT_HOSTS=codebeamer-db:5432
+      - WAIT_HOSTS=db:5432
       - WAIT_HOSTS_TIMEOUT=120
       - "CB_database_JDBC_Username=user"
       - "CB_database_JDBC_Password=pass"
       - "CB_database_JDBC_Driver=org.postgresql.Driver"
-      - "CB_database_JDBC_ConnectionURL=jdbc:postgresql://codebeamer-db:5432/codebeamer"
-    volumes:
-      - codebeamer-app-logo:/home/appuser/codebeamer/repository/config/logo
-      - codebeamer-app-repository-docs:/home/appuser/codebeamer/repository/docs
-      - codebeamer-app-repository-search:/home/appuser/codebeamer/repository/search
-      - codebeamer-app-logs:/home/appuser/codebeamer/logs
-      - codebeamer-app-tmp:/home/appuser/codebeamer/tomcat/tmp
+      - "CB_database_JDBC_ConnectionURL=jdbc:postgresql://db:5432/codebeamer"
+    # volumes:
+    #   - app-logo:/home/appuser/codebeamer/repository/config/logo
+    #   - app-repository-docs:/home/appuser/codebeamer/repository/docs
+    #   - app-repository-search:/home/appuser/codebeamer/repository/search
+    #   - app-logs:/home/appuser/codebeamer/logs
+    #   - app-tmp:/home/appuser/codebeamer/tomcat/tmp
     networks:
       - cb
 
 networks:
   cb:
 
-volumes:
-  codebeamer-db-data:
-  codebeamer-app-logo:
-  codebeamer-app-repository-docs:
-  codebeamer-app-repository-search:
-  codebeamer-app-logs:
-  codebeamer-app-tmp:
+# volumes:
+#   db-data:
+#   app-logo:
+#   repository-docs:
+#   app-repository-search:
+#   app-logs:
+#   app-tmp:
