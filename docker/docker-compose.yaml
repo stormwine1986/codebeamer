@@ -23,7 +23,6 @@ services:
       - codebeamer-db-data:/var/lib/postgresql/data
     networks:
       - cb
-    mem_limit: 1024m
 
   codebeamer-app:
     image: intland/codebeamer:2.0.0.0
@@ -46,37 +45,6 @@ services:
       - codebeamer-app-tmp:/home/appuser/codebeamer/tomcat/tmp
     networks:
       - cb
-    mem_limit: 8192m
-  
-  jenkins:
-    image: jenkins/jenkins:2.421
-    ports:
-      - 8090:8080
-      - 50000:50000
-    networks:
-      - cb
-    mem_limit: 2048m
-
-  superset:
-    image: apache/superset:latest
-    ports:
-      - 8088:8088
-    networks:
-      - cb
-    mem_limit: 2048m
-    environment:
-      - SUPERSET_SECRET_KEY=superset
-  
-  gerrit:
-    image: gerritcodereview/gerrit
-    ports:
-      - 8081:8080
-      - 29418:29418
-    networks:
-      - cb
-    environment:
-      - CANONICAL_WEB_URL=http://localhost:8081
-    mem_limit: 2048m
 
 networks:
   cb:
