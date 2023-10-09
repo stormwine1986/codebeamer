@@ -16,6 +16,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
+    <cb.home>/home/appuser/codebeamer</cb.home>
   </properties>
 
   <dependencies>
@@ -47,12 +48,16 @@
     <dependency>
     	<groupId>com.intland</groupId>
     	<artifactId>cb-core</artifactId>
-    	<version>2.0.0.0</version>
+      <version>2.0.0.0</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/cb-2.0.0.0.jar</systemPath>
     </dependency>
     <dependency>
     	<groupId>com.intland</groupId>
     	<artifactId>cb-jsp-wiki</artifactId>
-    	<version>2.0.0.0</version>
+      <version>2.0.0.0</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/cb-jsp-wiki-2.0.0.0.jar</systemPath>
     </dependency>
   </dependencies>
 </project>
