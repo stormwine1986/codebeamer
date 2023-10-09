@@ -9,7 +9,7 @@ For more information see: <https://codebeamer.com/cb/project/CB>
 
 ## About the resposity
 
-the resposity that store something about codebeamer custom component is mantained by a couple of programmer who interested in codebeamer.
+the resposity that store something about codebeamer custom component samples which be mantained by a couple of programmer who interested in codebeamer.
 
 ## Directory
 
@@ -27,3 +27,21 @@ the resposity that store something about codebeamer custom component is mantaine
 |-----------------------|---------------------------------------------------------------------------|
 |Parasoft               |<https://docs.parasoft.com/display/DTP543/Integrating+with+CodeBeamer+ALM> |
 |vectorCast             |<https://www.vector.com/int/en/download/vectorcast-codebeamer-integration/>|
+
+## How to deploy custom workflow action
+
+copy groovy files to /home/appuser/codebeamer/tomcat/webapps/ROOT/config/scripts/workflow
+see more: <https://codebeamer.com/cb/wiki/649989>
+
+## How to review log
+
+```bash
+tail -f /home/appuser/codebeamer/tomcat/logs/cb.txt
+```
+
+if you want to review the log about custom workflow action script, you can use command below:
+
+```bash
+tail -f /home/appuser/codebeamer/tomcat/logs/cb.txt | grep CustomScript
+```
+
