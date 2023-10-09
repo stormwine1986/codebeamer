@@ -15,9 +15,7 @@ the resposity that store something about codebeamer custom component is mantaine
 
 |Name                   |Description                                                            |
 |-----------------------|-----------------------------------------------------------------------|
-|docker                 |dcokerfile and docker-compose file for set up a development environment|
 |widget.iframe          |widget for show external site pages in wiki                            |
-|cli                    |Command Line Tools for codebeamer written by Golang                    |
 |custom.workflow.action |Groovy scripts for workflow action or listener                         |
 |listener.wrapper       |use groovy scripts extends listener                                    |
 
