@@ -16,8 +16,10 @@ the resposity that store something about codebeamer custom component is mantaine
 |Name                   |Description                                                            |
 |-----------------------|-----------------------------------------------------------------------|
 |widget.iframe          |widget for show external site pages in wiki                            |
-|custom.workflow.action |Groovy scripts for workflow action or listener                         |
+|custom.workflow.action |Groovy scripts sample                                                  |
 |listener.wrapper       |use groovy scripts extends listener                                    |
+|gerrit                 |gerrit data collector and rest api                                     |
+|jenkins                |pipeline sample                                                        |
 
 ## Tools Integration Reference
 
