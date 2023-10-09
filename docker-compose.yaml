@@ -30,7 +30,7 @@ services:
       - 8080:8080
     environment:
       - DEBUG=false
-      - TZ=Europe/Berlin
+      - TZ=Asia/Shanghai
       - WAIT_HOSTS=db:5432
       - WAIT_HOSTS_TIMEOUT=120
       - "CB_database_JDBC_Username=user"
