@@ -46,3 +46,10 @@ if you want to review the log about custom workflow action script, you can use c
 tail -f /home/appuser/codebeamer/tomcat/logs/cb.txt | grep CustomScript
 ```
 
+## How to extend event script execution timeout
+
+```
+"workflowAction" : {
+  "scriptTimeoutInSeconds" : 30
+}
+```
