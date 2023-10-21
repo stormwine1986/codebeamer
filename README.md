@@ -16,10 +16,9 @@ the resposity that store something about codebeamer custom component samples whi
 |Name                   |Description                                                            |
 |-----------------------|-----------------------------------------------------------------------|
 |widget.iframe          |widget for show external site pages in wiki                            |
-|custom.workflow.action |Groovy scripts sample                                                  |
-|listener.wrapper       |use groovy scripts extends listener                                    |
 |gerrit                 |gerrit data collector and rest api                                     |
 |jenkins                |pipeline sample                                                        |
+|handbook               |                                                                       |
 
 ## Tools Integration Reference
 
