@@ -31,7 +31,7 @@
 	// "shutdownAction": "none",
 
 	// Uncomment the next line to run commands after the container is created.
-	"postCreateCommand": "chmod +x ./install.sh && ./install.sh",
+	//"postCreateCommand": "chmod +x ./install.sh && ./install.sh",
 
 	// Configure tool-specific properties.
 	// "customizations": {},
@@ -41,9 +41,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"vscjava.vscode-java-pack",
-				"ms-python.python",
-				"ms-python.isort"
+				"vscjava.vscode-java-pack"
 			]
 		}
 	}
