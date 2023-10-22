@@ -1,4 +1,4 @@
-# 附录：事件脚本中发起请求
+# 附录：URLConnection
 
 ## 在 groovy 脚本中发起 POST 请求
 
