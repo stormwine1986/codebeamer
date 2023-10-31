@@ -64,8 +64,7 @@ def item = subject.subjects[0]
 item = controller.getTrackerItem(event.request, item.id)
 
 // 2. 从问题关联的条目上获取评审对象
-def /*QueriesResult*/ result = queries.executeQueryByQueryString(event.request, /*pageNo*/ 1, /*pagesize*/ 1, /*queryString*/ "tracker.id IN (4424) AND 'status' IN ('评委初审','主审人
-终审') AND SubjectID IN (${item.id})")
+def /*QueriesResult*/ result = queries.executeQueryByQueryString(event.request, /*pageNo*/ 1, /*pagesize*/ 1, /*queryString*/ "tracker.id IN (4424) AND 'status' IN ('评委初审','主审人终审') AND SubjectID IN (${item.id})")
 
 if(result.trackerItems.fullListSize == 0) throw new VetoException("不存在正在进行中的评审，拒绝创建问题。") 
 
