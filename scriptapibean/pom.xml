@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.storm</groupId>
+  <artifactId>script-api-bean</artifactId>
+  <version>1.0-beta</version>
+
+  <name>Script Api Bean</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
+    <cb.home>/home/appuser/codebeamer</cb.home>
+  </properties>
+
+  <dependencies>
+    <dependency>
+    	<groupId>org.apache</groupId>
+    	<artifactId>commons-io</artifactId>
+    	<version>2.11.0</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/commons-io-2.11.0.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache</groupId>
+    	<artifactId>gson</artifactId>
+    	<version>2.9.1</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/json-20230227.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>com.intland</groupId>
+    	<artifactId>cb-core</artifactId>
+      <version>2.0.0.0</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/cb-2.0.0.0.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-context</artifactId>
+      <version>5.3.27</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/spring-context-5.3.27.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-beans</artifactId>
+      <version>5.3.27</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/spring-beans-5.3.27.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-core</artifactId>
+      <version>5.3.27</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/spring-core-5.3.27.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-web</artifactId>
+      <version>5.3.27</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/webapps/ROOT/WEB-INF/lib/spring-web-5.3.27.jar</systemPath>
+    </dependency>
+    <dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>servlet-api</artifactId>
+      <version>0.0.1</version>
+      <scope>system</scope>
+      <systemPath>${cb.home}/tomcat/lib/servlet-api.jar</systemPath>
+    </dependency>
+  </dependencies>
+
+  <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <fork>true</fork>
+                    <executable>/usr/bin/javac</executable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
