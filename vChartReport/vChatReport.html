@@ -1,0 +1,588 @@
+<html>
+<head>
+	<title>V-Chart Report</title>
+	<script src="./jquery.js"></script>
+</head>
+
+<style type="text/css">
+body {
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: bold;
+}
+.assistor {  
+	position: relative;
+}
+	
+.bgimage{
+	background-image: url("bg.png");
+	background-repeat: no-repeat;
+	width:  100%;
+	height: 100%;
+	overflow: auto;
+}
+
+/* SYS.1*/
+#div001{
+	position: absolute;
+	top: 152px;
+	left: 135px;
+}
+#div002{
+	position: absolute;
+	top: 123px;
+	left: 660px;
+}
+#div003{
+	position: absolute;
+	top: 152px;
+	left: 660px;
+}
+
+/* SYS.2*/
+#div004{
+	position: absolute;
+	top: 195px;
+	left: 53px;
+}
+#div005{
+	position: absolute;
+	top: 280px;
+	left: 173px;
+}
+#div006{
+	position: absolute;
+	top: 190px;
+	left: 720px;
+}
+#div007{
+	position: absolute;
+	top: 220px;
+	left: 720px;
+}
+#div008{
+	position: absolute;
+	top: 250px;
+	left: 720px;
+}
+#div009{
+	position: absolute;
+	top: 280px;
+	left: 545px;
+}
+#div010{
+	position: absolute;
+	top: 280px;
+	left: 725px;
+}
+/* SYS.3*/
+#div011{
+	position: absolute;
+	top: 340px;
+	left: 90px;
+}
+#div012{
+	position: absolute;
+	top: 410px;
+	left: 215px;
+}
+#div013{
+	position: absolute;
+	top: 320px;
+	left: 770px;
+}
+#div014{
+	position: absolute;
+	top: 350px;
+	left: 770px;
+}
+#div015{
+	position: absolute;
+	top: 380px;
+	left: 760px;
+}
+/* SWE.1*/
+#div016{
+	position: absolute;
+	top: 455px;
+	left: 65px;
+}
+#div017{
+	position: absolute;
+	top: 455px;
+	left: 130px;
+}
+#div018{
+	position: absolute;
+	top: 547px;
+	left: 240px;
+}
+#div019{
+	position: absolute;
+	top: 477px;
+	left: 785px;
+}
+#div020{
+	position: absolute;
+	top: 507px;
+	left: 785px;
+}
+#div021{
+	position: absolute;
+	top: 537px;
+	left: 783px;
+}
+/* SWE.2*/
+#div022{
+	position: absolute;
+	top: 590px;
+	left: 140px;
+}
+#div023{
+	position: absolute;
+	top: 685px;
+	left: 260px;
+}
+#div024{
+	position: absolute;
+	top: 612px;
+	left: 820px;
+}
+#div025{
+	position: absolute;
+	top: 642px;
+	left: 820px;
+}
+#div026{
+	position: absolute;
+	top: 675px;
+	left: 805px;
+}
+/* SWE.3*/
+#div027{
+	position: absolute;
+	top: 715px;
+	left: 90px;
+}
+#div028{
+	position: absolute;
+	top: 715px;
+	left: 160px;
+}
+#div029{
+	position: absolute;
+	top: 820px;
+	left: 285px;
+}
+#div030{
+	position: absolute;
+	top: 750px;
+	left: 840px;
+}
+#div031{
+	position: absolute;
+	top: 780px;
+	left: 840px;
+}
+#div032{
+	position: absolute;
+	top: 812px;
+	left: 830px;
+}
+/* Trace */
+#div033{
+	position: absolute;
+	top: 220px;
+	left: 940px;
+}
+#div034{
+	position: absolute;
+	top: 280px;
+	left: 940px;
+}
+#div035{
+	position: absolute;
+	top: 345px;
+	left: 950px;
+}
+#div036{
+	position: absolute;
+	top: 395px;
+	left: 940px;
+}
+#div037{
+	position: absolute;
+	top: 510px;
+	left: 940px;
+}
+#div038{
+	position: absolute;
+	top: 635px;
+	left: 940px;
+}
+#div039{
+	position: absolute;
+	top: 780px;
+	left: 940px;
+}
+/* SYS.5 */
+#div040{
+	position: absolute;
+	top: 180px;
+	left: 1170px;
+}
+#div041{
+	position: absolute;
+	top: 180px;
+	left: 1390px;
+}
+#div042{
+	position: absolute;
+	top: 210px;
+	left: 1170px;
+}
+#div043{
+	position: absolute;
+	top: 210px;
+	left: 1283px;
+}
+#div044{
+	position: absolute;
+	top: 210px;
+	left: 1445px;
+}
+#div045{
+	position: absolute;
+	top: 243px;
+	left: 1170px;
+}
+#div046{
+	position: absolute;
+	top: 243px;
+	left: 1400px;
+}
+#div047{
+	position: absolute;
+	top: 273px;
+	left: 1175px;
+}
+#div048{
+	position: absolute;
+	top: 273px;
+	left: 1290px;
+}
+#div049{
+	position: absolute;
+	top: 273px;
+	left: 1440px;
+}
+#div050{
+	position: absolute;
+	top: 210px;
+	left: 1730px;
+}
+#div051{
+	position: absolute;
+	top: 273px;
+	left: 1730px;
+}
+/* SYS.4 */
+#div052{
+	position: absolute;
+	top: 315px;
+	left: 1135px;
+}
+#div053{
+	position: absolute;
+	top: 315px;
+	left: 1360px;
+}
+#div054{
+	position: absolute;
+	top: 345px;
+	left: 1135px;
+}
+#div055{
+	position: absolute;
+	top: 345px;
+	left: 1250px;
+}
+#div056{
+	position: absolute;
+	top: 345px;
+	left: 1430px;
+}
+#div057{
+	position: absolute;
+	top: 378px;
+	left: 1132px;
+}
+#div058{
+	position: absolute;
+	top: 378px;
+	left: 1360px;
+}
+#div059{
+	position: absolute;
+	top: 408px;
+	left: 1132px;
+}
+#div060{
+	position: absolute;
+	top: 408px;
+	left: 1250px;
+}
+#div061{
+	position: absolute;
+	top: 408px;
+	left: 1430px;
+}
+#div062{
+	position: absolute;
+	top: 345px;
+	left: 1680px;
+}
+#div063{
+	position: absolute;
+	top: 408px;
+	left: 1690px;
+}
+/* SWE.6 */
+#div064{
+	position: absolute;
+	top: 447px;
+	left: 1110px;
+}
+#div065{
+	position: absolute;
+	top: 480px;
+	left: 1110px;
+}
+#div066{
+	position: absolute;
+	top: 512px;
+	left: 1115px;
+}
+#div067{
+	position: absolute;
+	top: 545px;
+	left: 1115px;
+}
+#div068{
+	position: absolute;
+	top: 545px;
+	left: 1665px;
+}
+/* SWE.5 */
+#div069{
+	position: absolute;
+	top: 585px;
+	left: 1092px;
+}
+#div070{
+	position: absolute;
+	top: 618px;
+	left: 1092px;
+}
+#div071{
+	position: absolute;
+	top: 650px;
+	left: 1095px;
+}
+#div072{
+	position: absolute;
+	top: 683px;
+	left: 1095px;
+}
+#div073{
+	position: absolute;
+	top: 683px;
+	left: 1640px;
+}
+/* SWE.4 */
+#div074{
+	position: absolute;
+	top: 722px;
+	left: 1060px;
+}
+#div075{
+	position: absolute;
+	top: 755px;
+	left: 1060px;
+}
+#div076{
+	position: absolute;
+	top: 787px;
+	left: 1060px;
+}
+#div077{
+	position: absolute;
+	top: 820px;
+	left: 1060px;
+}
+#div078{
+	position: absolute;
+	top: 820px;
+	left: 1615px;
+}
+/* LAST TABLE */
+#div079{
+	position: absolute;
+	top: 855px;
+	left: 850px;
+}
+#div080{
+	position: absolute;
+	top: 871px;
+	left: 850px;
+}
+#div081{
+	position: absolute;
+	top: 887px;
+	left: 850px;
+}
+#div082{
+	position: absolute;
+	top: 903px;
+	left: 850px;
+}
+#div083{
+	position: absolute;
+	top: 919px;
+	left: 850px;
+}
+#div084{
+	position: absolute;
+	top: 935px;
+	left: 850px;
+}
+#div085{
+	position: absolute;
+	top: 951px;
+	left: 850px;
+}
+#div086{
+	position: absolute;
+	top: 967px;
+	left: 850px;
+}
+#div087{
+	position: absolute;
+	top: 983px;
+	left: 850px;
+}
+#div088{
+	position: absolute;
+	top: 999px;
+	left: 850px;
+}
+</style>
+	
+<body>
+<div class="assistor">
+	<div class="bgimage">
+		<div id="div001">...</div> <!-- (SYS.1) Implemented(SYS.1) -->
+		<div id="div002">...</div> <!-- Total Stakeholder Requirements -->
+		<div id="div003">...</div> <!-- (SYS.1) Approved -->
+		
+		<div id="div004">...</div>	<!-- (SYS.2) Implemented左边值 -->
+		<div id="div005">...</div> 	<!-- (SYS.2) Implemented下边值 -->
+		<div id="div006">...</div> <!-- (SYS.2) Total System Requirements -->
+		<div id="div007">...</div>	<!-- (SYS.2) System Requirements Approved -->
+		<div id="div008">...</div>	<!-- (SYS.2) Approval Percentage -->
+		<div id="div009">...</div>	<!-- (SYS.2) Constraints (NFR) -->
+		<div id="div010">...</div>	<!-- (SYS.2) Constraints (NFR) -->
+		
+		<div id="div011">...</div>	<!-- (SYS.3) Implemented左边值 -->
+		<div id="div012">...</div> <!-- (SYS.3) Implemented下边值 -->
+		<div id="div013">...</div> <!-- (SYS.3) Total System Architecture Requirements -->
+		<div id="div014">...</div> <!-- (SYS.3) System Arch Requirements Approved -->
+		<div id="div015">...</div>	<!-- (SYS.3) Approval Percentage -->
+		
+		<div id="div016">...</div>	<!-- (SWE.1) Implemented左边值1 -->
+		<div id="div017">...</div>	<!-- (SWE.1) Implemented左边值2 -->
+		<div id="div018">...</div>	<!-- (SWE.1) Implemented下边值 -->
+		<div id="div019">...</div>	<!-- (SWE.1) Total Software Requirements -->
+		<div id="div020">...</div>	<!-- (SWE.1) Software Requirements Approved -->
+		<div id="div021">...</div>	<!-- (SWE.1) Approval Percentage -->
+		
+		<div id="div022">...</div>	<!-- (SWE.2) Implemented左边值 -->
+		<div id="div023">...</div>	<!-- (SWE.2) Implemented下边值 -->
+		<div id="div024">...</div>	<!-- (SWE.2) Total Software Architecture Requirements -->
+		<div id="div025">...</div>	<!-- (SWE.2) Software Arch. Requirements Approved -->
+		<div id="div026">...</div>	<!-- (SWE.2) Approval Percentage -->
+		
+		<div id="div027">...</div>	<!-- (SWE.3) Implemented左边值1 -->
+		<div id="div028">...</div>	<!-- (SWE.3) Implemented左边值2 -->
+		<div id="div029">...</div>	<!-- (SWE.3) Implemented下边值 -->
+		<div id="div030">...</div>	<!-- (SWE.3) Total Software Detailed Design Units -->
+		<div id="div031">...</div>	<!-- (SWE.3) Software Detailed Design Units Approved -->
+		<div id="div032">...</div>	<!-- (SWE.3) Approval Percentage -->
+		
+		<div id="div033">...</div>	<!-- 中间Traced % 1 -->
+		<div id="div034">...</div>	<!-- 中间Traced % 2 -->
+		<div id="div035">...</div>	<!-- 中间Traced % 3 -->
+		<div id="div036">...</div>	<!-- 中间Traced % 4 -->
+		<div id="div037">...</div>	<!-- 中间Traced % 5 -->
+		<div id="div038">...</div>	<!-- 中间Traced % 6 -->
+		<div id="div039">...</div>	<!-- 中间Traced % 7 -->
+		
+		<div id="div040">...</div>	<!-- (SYS.5) Total ITV Req. -->
+		<div id="div041">...</div>	<!-- (SYS.5) Total ITV Tests -->
+		<div id="div042">...</div>	<!-- (SYS.5) OK -->
+		<div id="div043">...</div>	<!-- (SYS.5) Not OK -->
+		<div id="div044">...</div>	<!-- (SYS.5) Not Tested -->
+		<div id="div045">...</div>	<!-- (SYS.5) Non-ITV Req. -->
+		<div id="div046">...</div>	<!-- (SYS.5) Non-ITV Tests -->
+		<div id="div047">...</div>	<!-- (SYS.5) OK -->
+		<div id="div048">...</div>	<!-- (SYS.5) Not OK -->
+		<div id="div049">...</div>	<!-- (SYS.5) Not Tested -->
+		<div id="div050">...</div>	<!-- (SYS.5) %Passed 1 -->
+		<div id="div051">...</div>	<!-- (SYS.5) %Passed 2 -->
+		
+		<div id="div052">...</div>	<!-- (SYS.4) Total SYIT Req. -->
+		<div id="div053">...</div>	<!-- (SYS.4) Total SYIT Tests -->
+		<div id="div054">...</div>	<!-- (SYS.4) OK -->
+		<div id="div055">...</div>	<!-- (SYS.4) Not OK -->
+		<div id="div056">...</div>	<!-- (SYS.4) Not Tested -->
+		<div id="div057">...</div>	<!-- (SYS.4) Non-SYIT Req. -->
+		<div id="div058">...</div>	<!-- (SYS.4) Non-SYIT Tests -->
+		<div id="div059">...</div>	<!-- (SYS.4) OK -->
+		<div id="div060">...</div>	<!-- (SYS.4) Not OK -->
+		<div id="div061">...</div>	<!-- (SYS.4) Not Tested -->
+		<div id="div062">...</div>	<!-- (SYS.4) %Passed 1 -->
+		<div id="div063">...</div>		<!-- (SYS.4) %Passed 2 -->
+		
+		<div id="div064">...</div>	<!-- (SWE.6) Total Software Qualification Tests -->
+		<div id="div065">...</div>	<!-- (SWE.6) Requirements Passed -->
+		<div id="div066">...</div>	<!-- (SWE.6) Requirements Failed -->
+		<div id="div067">...</div>	<!-- (SWE.6) Requirements Not Tested -->
+		<div id="div068">...</div>	<!-- (SWE.6) %Passed -->
+		
+		<div id="div069">...</div>	<!-- (SWE.5) Total Software Integration Tests -->
+		<div id="div070">...</div>	<!-- (SWE.5) Requirements Passed -->
+		<div id="div071">...</div>	<!-- (SWE.5) Requirements Failed -->
+		<div id="div072">...</div>	<!-- (SWE.5) Requirements Not Tested -->
+		<div id="div073">...</div>	<!-- (SWE.5) %Passed -->
+		
+		<div id="div074">...</div>	<!-- (SWE.4) Total Software Unit Tests -->
+		<div id="div075">...</div>	<!-- (SWE.4) Units Passed -->
+		<div id="div076">...</div>	<!-- (SWE.4) Units Failed -->
+		<div id="div077">...</div>	<!-- (SWE.4) Units Not Tested -->
+		<div id="div078">...</div>	<!-- (SWE.4) %Passed -->
+		
+		<div id="div079">...</div>	<!-- Total No of Problems (Functional - Non Functional) -->
+		<div id="div080">...</div>	<!-- Total No of Problems (Functional Defects) Customer Reported -->
+		<div id="div081">...</div>	<!-- Total No of Problems (Functional Defects) -->
+		<div id="div082">...</div>	<!-- Total Open Problems (Functional) -->
+		<div id="div083">...</div>	<!-- Total Open Problems (Customer Reported) -->
+		<div id="div084">...</div>	<!-- Open Problems (Functional Defects) - UBV 20 -->
+		<div id="div085">...</div>	<!-- Open Problems (Functional Defects) - UBV 13 -->
+		<div id="div086">...</div>	<!-- Total Peer Reviews planned -->
+		<div id="div087">...</div>	<!-- Total Peer Reviews closed -->
+		<div id="div088">...</div>	<!-- No.of Peer Reviews overdue -->
+	</div>
+</div>
+<script src="./vChartReport.js"></script>
+</body>
+</html>
